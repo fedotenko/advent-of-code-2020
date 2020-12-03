@@ -43,37 +43,6 @@ const test = (arr) => {
   }
 };
 
-// const test = (arr) => {
-//   arr.sort((a, b) => a - b);
-
-//   const l = arr.length;
-//   let k;
-
-//   for (let i = 0; i < l - 2; i++) {
-//     for (let j = i + 1; i < l - 1; j++) {
-//       for (k = j + 1; k < l; k++) {
-//         s = arr[i] + arr[j] + arr[k];
-//         if (s === 2020) {
-//           console.log(
-//             "Second:",
-//             arr[i],
-//             arr[j],
-//             arr[k],
-//             arr[i] * arr[j] * arr[k]
-//           );
-//           return;
-//         }
-//         if (s > 2020) {
-//           break;
-//         }
-//       }
-//       if (j === k - 1) {
-//         break;
-//       }
-//     }
-//   }
-// };
-
 test([
   1686,
   1337,
