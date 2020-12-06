@@ -1,7 +1,6 @@
 const fs = require("fs");
 const input = fs.readFileSync("./input.txt", { encoding: "utf8" });
-const transformed = input.replace(/[F|L]/g, 0).replace(/[B|R]/g, 1);
-const groups = transformed.split("\n\n");
+const groups = input.split("\n\n");
 
 let first = 0;
 let second = 0;
