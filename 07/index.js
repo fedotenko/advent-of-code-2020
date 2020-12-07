@@ -61,6 +61,12 @@ const solution = (filename) => {
   return [res1, res2];
 };
 
+const [test1] = solution("test1.txt");
+console.log(test1, test1 === 4);
+
+const [_, test2] = solution("test2.txt");
+console.log(test2, test2 === 126);
+
 const [r1, r2] = solution("input.txt");
 
 console.log(r1, r2);
