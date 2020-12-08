@@ -5,10 +5,13 @@ let timeout;
 
 fs.watch(path, {}, () => {
   if (!timeout) {
-    exec(`node ${path}/index.js`, (err, stdout, stderr) => {
+    exec(`node ${path}/index.js`, (err, stdout) => {
       if (err) {
         console.log("=== ERROR ===");
-        console.log("Error:", err);
+        console.log("= Output =");
+        console.log(stdout);
+        console.log("= Error =");
+        console.log(err);
       } else {
         console.log("=== RESULT ===");
         console.log(stdout);
