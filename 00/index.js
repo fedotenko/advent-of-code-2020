@@ -3,7 +3,9 @@ const solution = (filename) => {
   let res2 = null;
 
   const fs = require("fs");
-  const input = fs.readFileSync("./" + filename, { encoding: "utf8" });
+  const input = fs.readFileSync(__dirname + "/" + filename, {
+    encoding: "utf8",
+  });
 
   return [res1, res2];
 };
