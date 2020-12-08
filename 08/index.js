@@ -1,4 +1,26 @@
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
+const execute = (instructions) => {
+  let visited = instructions.map((_) => false);
+  let acc = 0;
+  let pos = 0;
+
+  while (!visited[pos] && pos < instructions.length) {
+    const [op, arg] = instructions[pos];
+    visited[pos] = true;
+    switch (op) {
+      case "acc":
+        acc += arg;
+        pos++;
+        break;
+      case "jmp":
+        pos += arg;
+        break;
+      default:
+        pos++;
+    }
+  }
+
+  return [acc, pos];
+};
 
 const solution = (filename) => {
   let res1 = null;
@@ -15,68 +37,26 @@ const solution = (filename) => {
     return [op, parseInt(arg)];
   });
 
-  // first
-  let visited = lines.map((_) => false);
-  let pos = 0;
-  let acc = 0;
-  while (!visited[pos]) {
-    const [op, arg] = instructions[pos];
-    visited[pos] = true;
-    switch (op) {
-      case "acc":
-        acc += arg;
-        pos++;
-        break;
-      case "jmp":
-        pos += arg;
-        break;
-      default:
-        pos++;
-    }
-  }
-  res1 = acc;
+  [res1] = execute(instructions);
 
   // second
-  pos = 0;
-  let currenPos = 0;
-  while (pos !== lines.length) {
-    visited = lines.map((_) => false);
-    acc = 0;
-
-    let changedPos = undefined;
-    let i = -1;
-    pos = 0;
-    while (pos < lines.length && !visited[pos]) {
-      let [op, arg] = instructions[pos];
-
-      if (
-        changedPos !== undefined ||
-        i < currenPos ||
-        op === "acc" ||
-        (op === "nop" && arg === 0)
-      ) {
-      } else {
-        op = op === "jmp" ? "nop" : "jmp";
-        changedPos = currenPos;
-      }
-
-      visited[pos] = true;
-      switch (op) {
-        case "acc":
-          acc += arg;
-          pos++;
-          break;
-        case "jmp":
-          pos += arg;
-          break;
-        default:
-          pos++;
-      }
-      i++;
+  let step = 0;
+  for (let i = 0; i < instructions.length; i++) {
+    const [op, arg] = instructions[i];
+    if (op === "acc" || (op === "nop" && arg === 0)) {
+      continue;
     }
-    currenPos++;
+    const newInstructions = instructions.map((instruction, index) =>
+      i !== index
+        ? instruction
+        : [instruction[0] === "jmp" ? "nop" : "jmp", instruction[1]]
+    );
+
+    [res2, step] = execute(newInstructions);
+    if (step === instructions.length) {
+      break;
+    }
   }
-  res2 = acc;
 
   return [res1, res2];
 };
