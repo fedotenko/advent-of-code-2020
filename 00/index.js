@@ -17,5 +17,4 @@ const [_, test2] = solution("test2.txt");
 console.log(test2, test2 === null);
 
 const [res1, res2] = solution("input.txt");
-
 console.log(res1, res2);
