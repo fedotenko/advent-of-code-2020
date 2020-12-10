@@ -20,9 +20,34 @@ const solution = (filename) => {
   res1 = diffs["1"] * diffs["3"];
 
   // second
-  // total number of combination is a multipication possible combinations of (n+1) sequences
-  // calculated them manually for the first cases, it looks like Tribonacci Numbers
-  let n = [1, 1, 1, 2, 4, 7, 13, 24, 44];
+  // total number of distinct arrangements is a multipication of distinct arrangements of (n = n + 1) subsequences.
+  // max subsequence length is 6, so we can precalculate number of arrangements for them
+
+  const calculateArrangementsNumber = (arrangement, processed = []) => {
+    let cnt = 1;
+    const current = arrangement.join("-");
+    if (processed.includes(current)) {
+      return 0;
+    }
+    processed.push(current);
+    for (let i = 1; i < arrangement.length - 1; i++) {
+      if (arrangement[i + 1] - arrangement[i - 1] <= 3) {
+        const newSeq = [...arrangement];
+        newSeq.splice(i, 1);
+        cnt += calculateArrangementsNumber(newSeq, processed);
+      }
+    }
+
+    return cnt;
+  };
+
+  // sequence looks like Tribonacci Numbers
+  const n = [1];
+  for (let i = 1; i < 7; i++) {
+    const tmp = new Array(i).fill(1).map((_, index) => index);
+    n.push(calculateArrangementsNumber(tmp));
+  }
+
   let length = 1;
   let count = 1;
   for (let i = 0; i < adapters.length - 1; i++) {
@@ -31,7 +56,7 @@ const solution = (filename) => {
     } else {
       if (length > i) {
         // begin of the adapters list
-        count *= n[length + 1]; // 0 should be counted as a sequence element
+        count *= n[length + 1]; // implied 0 should be counted as a sequence element
       } else {
         count *= n[length];
       }
