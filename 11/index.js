@@ -1,5 +1,3 @@
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
-
 const solution = (filename) => {
   let res1 = null;
   let res2 = null;
