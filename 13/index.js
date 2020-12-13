@@ -13,25 +13,20 @@ const solution = (filename) => {
   const busIds = lines[1];
 
   // first
-  const arr = new Array(timestamp * 2).fill(0);
   const buses = busIds
     .split(",")
     .filter((x) => x !== "x")
     .map((x) => parseInt(x));
-
+  let minDiff = Number.MAX_SAFE_INTEGER;
+  let busId;
   for (let bus of buses) {
-    let i = bus;
-    while (i < arr.length) {
-      arr[i] = bus;
-      i += bus;
+    let currentDiff = (Math.floor(timestamp / bus) + 1) * bus - timestamp;
+    if (currentDiff < minDiff) {
+      minDiff = currentDiff;
+      busId = bus;
     }
   }
-  let i = timestamp;
-  while (arr[i] === 0) {
-    res1++;
-    i++;
-  }
-  res1 *= arr[i];
+  res1 = busId * minDiff;
 
   // second
   const entries = busIds.split(",");
