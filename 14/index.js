@@ -65,9 +65,6 @@ const solution = (filename) => {
 
   memory = {};
   for (let line of lines) {
-    if (!line) {
-      continue;
-    }
     if (line.substr(0, 4) === "mask") {
       mask = line.substr(7, 36);
     } else {
