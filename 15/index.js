@@ -15,13 +15,8 @@ const solution = (filename, turns) => {
   }
   while (turn < turns) {
     const position = positions.get(next);
-    if (!position) {
-      positions.set(next, turn);
-      next = 0;
-    } else {
-      positions.set(next, turn);
-      next = turn - position;
-    }
+    positions.set(next, turn);
+    next = position ? turn - position : 0;
     turn++;
   }
 
