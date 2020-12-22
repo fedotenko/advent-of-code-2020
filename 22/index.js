@@ -34,29 +34,29 @@ const solution = (filename) => {
   };
 
   let recursiveWinnerDeck;
-  const game = (subDeck1, dubDeck2) => {
-    const hashes = [getHash(subDeck1, dubDeck2)];
-    while (subDeck1.length && dubDeck2.length) {
+  const game = (subDeck1, subDeck2) => {
+    const hashes = [getHash(subDeck1, subDeck2)];
+    while (subDeck1.length && subDeck2.length) {
       const card1 = subDeck1.shift();
-      const card2 = dubDeck2.shift();
+      const card2 = subDeck2.shift();
       const deck1Win =
-        subDeck1.length >= card1 && dubDeck2.length >= card2
-          ? game([...subDeck1.slice(0, card1)], [...dubDeck2.slice(0, card2)])
+        subDeck1.length >= card1 && subDeck2.length >= card2
+          ? game([...subDeck1.slice(0, card1)], [...subDeck2.slice(0, card2)])
           : card1 > card2;
 
       if (deck1Win) {
         subDeck1.push(card1, card2);
       } else {
-        dubDeck2.push(card2, card1);
+        subDeck2.push(card2, card1);
       }
-      const hash = getHash(subDeck1, dubDeck2);
+      const hash = getHash(subDeck1, subDeck2);
       if (hashes.includes(hash)) {
         return true;
       } else {
         hashes.push(hash);
       }
     }
-    recursiveWinnerDeck = subDeck1.length ? subDeck1 : dubDeck2;
+    recursiveWinnerDeck = subDeck1.length ? subDeck1 : subDeck2;
     return !!subDeck1.length;
   };
 
